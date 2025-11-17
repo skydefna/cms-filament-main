@@ -1,0 +1,279 @@
+.sm-custom a, .sm-custom a:hover, .sm-custom a:focus, .sm-custom a:active {
+    padding: 13px 20px;
+    font-family: "Plus Jakarta Sans", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 17px;
+    text-decoration: none;
+}
+
+.sm-custom a.disabled {
+    color: #cccccc;
+}
+
+.sm-custom a .sub-arrow {
+    position: absolute;
+    top: 50%;
+    margin-top: -17px;
+    left: auto;
+    right: 4px;
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    font: bold 14px/34px monospace !important;
+    text-align: center;
+    text-shadow: none;
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.sm-custom a .sub-arrow::before {
+    content: '\203A'; /* Single right chevron */
+    display: inline-block;
+    font-size: 20px;
+    color: #c0c0c0
+}
+
+.sm-custom a.highlighted .sub-arrow::before {
+    content: '\203A';
+    display: inline-block;
+    transform: rotate(90deg);
+    font-size: 20px;
+    color: #c0c0c0
+}
+
+.sm-custom li {
+    border-top: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.sm-custom > li:first-child {
+    border-top: 0;
+}
+
+.sm-custom ul {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.sm-custom ul a, .sm-custom ul a:hover, .sm-custom ul a:focus, .sm-custom ul a:active {
+    font-size: 14px;
+}
+
+.sm-custom ul ul a,
+.sm-custom ul ul a:hover,
+.sm-custom ul ul a:focus,
+.sm-custom ul ul a:active {
+    border-left: 16px solid transparent;
+}
+
+.sm-custom ul ul ul a,
+.sm-custom ul ul ul a:hover,
+.sm-custom ul ul ul a:focus,
+.sm-custom ul ul ul a:active {
+    border-left: 24px solid transparent;
+}
+
+.sm-custom ul ul ul ul a,
+.sm-custom ul ul ul ul a:hover,
+.sm-custom ul ul ul ul a:focus,
+.sm-custom ul ul ul ul a:active {
+    border-left: 32px solid transparent;
+}
+
+.sm-custom ul ul ul ul ul a,
+.sm-custom ul ul ul ul ul a:hover,
+.sm-custom ul ul ul ul ul a:focus,
+.sm-custom ul ul ul ul ul a:active {
+    border-left: 40px solid transparent;
+}
+
+@media (min-width: 768px) {
+    /* Switch to desktop layout
+    -----------------------------------------------
+       These transform the menu tree from
+       collapsible to desktop (navbar + dropdowns)
+    -----------------------------------------------*/
+    /* start... (it's not recommended editing these rules) */
+    .sm-custom ul {
+        position: absolute;
+        width: 12em;
+    }
+
+    .sm-custom li {
+        float: left;
+    }
+
+    .sm-custom.sm-rtl li {
+        float: right;
+    }
+
+    .sm-custom ul li, .sm-custom.sm-rtl ul li, .sm-custom.sm-vertical li {
+        float: none;
+    }
+
+    .sm-custom a {
+        white-space: nowrap;
+    }
+
+    .sm-custom ul a, .sm-custom.sm-vertical a {
+        white-space: normal;
+    }
+
+    .sm-custom .sm-nowrap > li > a, .sm-custom .sm-nowrap > li > :not(ul) a {
+        white-space: nowrap;
+    }
+
+    .sm-custom {
+        background: transparent;
+    }
+
+    .sm-custom a, .sm-custom a:hover, .sm-custom a:focus, .sm-custom a:active, .sm-custom a.highlighted {
+        padding: 11px 20px;
+    }
+
+    .sm-custom a:hover, .sm-custom a:focus, .sm-custom a:active, .sm-custom a.highlighted {
+        color: white;
+        background: black;
+        transition: all 0.3s ease;
+        -webkit-transition: all 0.3s ease;
+    }
+
+    .sm-custom a.disabled {
+        background: #fff;
+        color: #cccccc;
+    }
+
+    .sm-custom a.has-submenu {
+        padding-right: 32px;
+    }
+
+    .sm-custom a .sub-arrow {
+        top: 50%;
+        margin-top: -8px;
+        right: 20px;
+        width: 8px;
+        height: 16px;
+        font: 14px/16px monospace !important;
+        background: transparent;
+    }
+
+    /* .sm-custom a.highlighted .sub-arrow::before {
+      content: '+';
+    } */
+    .sm-custom > li {
+        border-top: 0;
+        /*border-left: 1px solid #eeeeee;*/
+    }
+
+    .sm-custom > li:first-child {
+        border-left: 0;
+    }
+
+    .sm-custom ul {
+        padding: 0;
+        backdrop-filter: blur(8px);
+        background: rgba(255,255,255,0.9);
+    }
+
+    .sm-custom ul a {
+        border: 0 !important;
+    }
+
+    .sm-custom ul a.has-submenu {
+        padding-right: 20px;
+    }
+
+    .sm-custom ul a .sub-arrow {
+        left: 8px;
+        right: auto;
+    }
+
+    .sm-custom ul > li {
+        border-top: 2px solid;
+    }
+
+    .sm-custom ul > li:first-child {
+        border-top: 0;
+    }
+
+    .sm-custom .scroll-up,
+    .sm-custom .scroll-down {
+        position: absolute;
+        display: none;
+        visibility: hidden;
+        overflow: hidden;
+        background: #fff;
+        height: 20px;
+    }
+
+    .sm-custom .scroll-up-arrow,
+    .sm-custom .scroll-down-arrow {
+        position: absolute;
+        top: -2px;
+        left: 50%;
+        margin-left: -8px;
+        width: 0;
+        height: 0;
+        overflow: hidden;
+        border-width: 8px;
+        border-style: dashed dashed solid dashed;
+        border-color: transparent transparent #555555 transparent;
+    }
+
+    .sm-custom .scroll-down-arrow {
+        top: 6px;
+        border-style: solid dashed dashed dashed;
+        border-color: #555555 transparent transparent transparent;
+    }
+
+    .sm-custom.sm-rtl a.has-submenu {
+        padding-right: 20px;
+        padding-left: 32px;
+    }
+
+    .sm-custom.sm-rtl a .sub-arrow {
+        left: 20px;
+        right: auto;
+    }
+
+    .sm-custom.sm-rtl.sm-vertical a.has-submenu {
+        padding: 11px 20px;
+    }
+
+    .sm-custom.sm-rtl.sm-vertical a .sub-arrow {
+        left: auto;
+        right: 8px;
+    }
+
+    .sm-custom.sm-rtl > li:first-child {
+        border-left: 1px solid #eeeeee;
+    }
+
+    .sm-custom.sm-rtl > li:last-child {
+        border-left: 0;
+    }
+
+    .sm-custom.sm-rtl ul a.has-submenu {
+        padding: 11px 20px;
+    }
+
+    .sm-custom.sm-rtl ul a .sub-arrow {
+        left: auto;
+        right: 8px;
+    }
+
+    .sm-custom.sm-vertical a .sub-arrow {
+        left: 8px;
+        right: auto;
+    }
+
+    .sm-custom.sm-vertical li {
+        border-left: 0;
+        border-top: 1px solid #eeeeee;
+    }
+
+    .sm-custom.sm-vertical > li:first-child {
+        border-top: 0;
+    }
+}
+
+/*# sourceMappingURL=sm-custom.css.map */

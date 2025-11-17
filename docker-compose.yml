@@ -1,0 +1,55 @@
+# compose.yaml
+services:
+
+    franken:
+        restart: unless-stopped
+        cpus: 4
+        mem_limit: 10000m
+        build:
+            dockerfile: ./docker/franken/Dockerfile
+            context: .
+        networks:
+            - dokploy-network
+        volumes:
+            - sitemap_data:/app/public
+
+    queue:
+        restart: unless-stopped
+        mem_limit: 1024m
+        cpus: 2
+        build:
+            dockerfile: ./docker/php-cli/Dockerfile
+            context: .
+        command: [ "php", "/var/www/html/artisan", "queue:work", "--name=redis", "--tries=3" ]
+        healthcheck:
+            test: [ "CMD", "healthcheck-queue" ]
+        environment:
+            - AUTORUN_ENABLED=true
+            - AUTORUN_LARAVEL_STORAGE_LINK=false
+            - PHP_OPCACHE_ENABLE=1
+        networks:
+            - dokploy-network
+
+    schedule:
+        restart: unless-stopped
+        mem_limit: 1024m
+        cpus: 2
+        build:
+            dockerfile: ./docker/php-cli/Dockerfile
+            context: .
+        command: [ "php", "/var/www/html/artisan", "schedule:work" ]
+        healthcheck:
+            test: [ "CMD", "healthcheck-schedule" ]
+        environment:
+            - AUTORUN_ENABLED=false
+            - PHP_OPCACHE_ENABLE=1
+        networks:
+            - dokploy-network
+        volumes:
+            - sitemap_data:/var/www/html/public
+networks:
+    dokploy-network:
+        driver: bridge
+        external: true
+volumes:
+    sitemap_data:

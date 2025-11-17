@@ -1,0 +1,60 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\PostCategory;
+use App\Models\User;
+use Illuminate\Auth\Access\HandlesAuthorization;
+
+class PostCategoryPolicy
+{
+    use HandlesAuthorization;
+
+    /**
+     * Determine whether the user can view any models.
+     */
+    public function viewAny(User $user): bool
+    {
+        return $user->can('view_any_post::category');
+    }
+
+    /**
+     * Determine whether the user can view the model.
+     */
+    public function view(User $user, PostCategory $postCategory): bool
+    {
+        return $user->can('view_post::category');
+    }
+
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
+    {
+        return $user->can('create_post::category');
+    }
+
+    /**
+     * Determine whether the user can update the model.
+     */
+    public function update(User $user, PostCategory $postCategory): bool
+    {
+        return $user->can('update_post::category');
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function delete(User $user, PostCategory $postCategory): bool
+    {
+        return $user->can('delete_post::category');
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+    public function reorder(User $user): bool
+    {
+        return $user->can('reorder_post::category');
+    }
+}

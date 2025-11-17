@@ -1,0 +1,106 @@
+# compose.yaml
+services:
+
+  database:
+    image: mariadb:10.6
+    mem_limit: 2048m
+    restart: unless-stopped
+    cpus: 4
+    ports:
+      - "${DB_EXPOSE_PORT}:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${DB_DATABASE}
+      MARIADB_USER: ${DB_USERNAME}
+      MARIADB_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - fpm_db_data:/var/lib/mysql
+    networks:
+      - dokploy-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  redis:
+    image: bitnami/redis
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 1
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - fpm_redis_data:/data
+    networks:
+      - dokploy-network
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  php-fpm:
+    restart: unless-stopped
+    mem_limit: 1048m
+    cpus: 2
+    build:
+      dockerfile: ./docker/fpm-nginx/Dockerfile
+      context: .
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - dokploy-network
+    environment:
+      - PHP_OPCACHE_ENABLE=1
+
+  queue:
+    mem_limit: 512m
+    cpus: 1
+    restart: unless-stopped
+    build:
+      dockerfile: ./docker/php-cli/Dockerfile
+      context: .
+    command: [ "php", "/var/www/html/artisan", "queue:work", "--name=redis", "--tries=3" ]
+    environment:
+      - AUTORUN_ENABLED=true
+      - AUTORUN_LARAVEL_MIGRATION_ISOLATION=true
+      - AUTORUN_LARAVEL_STORAGE_LINK=false
+      - PHP_OPCACHE_ENABLE=1
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - dokploy-network
+
+  schedule:
+    restart: unless-stopped
+    mem_limit: 512m
+    cpus: 1
+    build:
+      dockerfile: ./docker/php-cli/Dockerfile
+      context: .
+    command: [ "php", "/var/www/html/artisan", "schedule:work" ]
+    environment:
+      - PHP_OPCACHE_ENABLE=1
+    networks:
+      - dokploy-network
+    depends_on:
+      database:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+networks:
+  dokploy-network:
+    driver: bridge
+    external: true
+volumes:
+  fpm_db_data:
+  fpm_redis_data:
