@@ -82,29 +82,42 @@ Panduan ini akan membantu Anda memahami dan menggunakan aplikasi CMS Filament se
 
 ### Variabel Environment Penting
 ```env
-APP_NAME=Your Site Name
-APP_ENV=production
-APP_DEBUG=false
-APP_URL=https://yoursite.com
-APP_SUPER_ADMIN=your-email@domain.com
+APP_NAME="cms-filament-main"
+APP_ENV=local
+APP_DEBUG=true
+APP_URL=http://127.0.0.1:8000
+APP_KEY=base64:6Zu9174cwaAUCq0sSowtKHOxMjwTPHtH2Y6//gfLuJ8=
 
-# Database Configuration
+LOG_CHANNEL=stack
+LOG_LEVEL=debug
+
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=your_database
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
+DB_DATABASE=db_portal
+DB_USERNAME=root
+DB_PASSWORD=
 
-# File Storage
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+QUEUE_CONNECTION=sync
+CACHE_STORE=file
+CACHE_PREFIX=laravel_cache
+
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+AWS_DEFAULT_REGION=us-east-1
+AWS_BUCKET=
+AWS_USE_PATH_STYLE_ENDPOINT=false
+
 FILESYSTEM_DISK=public
 FILAMENT_FILESYSTEM_DISK=public
 
-# Mail Configuration
-MAIL_MAILER=smtp
-MAIL_FROM_ADDRESS=noreply@yoursite.com
-MAIL_FROM_NAME="${APP_NAME}"
-```
+APP_LOCALE=id
+APP_FALLBACK_LOCALE=id
+APP_FAKER_LOCALE=id_ID
+
+GOOGLE_MAPS_API_KEY=AIzaSyClms5j0avGk4T73JitR7rpuClFzFu3Jhs
 
 ## Akses Panel Admin
 
