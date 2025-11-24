@@ -10,7 +10,7 @@ use App\Models\Pengaduan;
 use Filament\Tables\Table;
 use Filament\Resources\Resource;
 use Illuminate\Database\Eloquent\Builder;
-use App\Filament\Resources\PengaduanResource\Pages\Pages\ManagePengaduan;
+use App\Filament\Resources\PengaduanResource\Pages\ManagePengaduan;
 
 class PengaduanResource extends Resource
 {
